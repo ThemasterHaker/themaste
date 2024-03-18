@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Wait</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #000;
+            color: #0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #000;
+            border-radius: 8px;
+            border: 1px solid #0f0;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            text-align: center;
+        }
+        #timer {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #0f0;
+        }
+    </style>
+    <script>
+        var timeleft = 300;
+
+        var downloadTimer = setInterval(function(){
+            document.getElementById("timer").innerHTML = "Time remaining: " + timeleft + " seconds";
+            timeleft -= 1;
+            if(timeleft <= 0){
+                clearInterval(downloadTimer);
+                window.location.href = "login.html";
+            }
+        }, 1000);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Hacker Wait</h2>
+        <p>You have been temporarily locked out due to too many failed login attempts.</p>
+        <p>Please wait for the timer to expire to try again.</p>
+        <div id="timer">Time remaining: 300 seconds</div>
+    </div>
+</body>
+</html>
