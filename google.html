@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Search</title>
+    <script>
+        function searchGoogle() {
+            var query = document.getElementById('search').value;
+            var url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+            
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    var parser = new DOMParser();
+                    var doc = parser.parseFromString(data, 'text/html');
+                    var searchResults = doc.querySelectorAll('div.g');
+                    var resultsContainer = document.getElementById('results');
+                    resultsContainer.innerHTML = ''; // Clear previous results
+                    searchResults.forEach(result => {
+                        var title = result.querySelector('h3').innerText;
+                        var link = result.querySelector('a').href;
+                        var snippet = result.querySelector('span.st').innerText;
+                        var resultHTML = `
+                            <div>
+                                <h3><a href="${link}" target="_blank">${title}</a></h3>
+                                <p>${snippet}</p>
+                                <a href="${link}" target="_blank">${link}</a>
+                            </div>
+                        `;
+                        resultsContainer.innerHTML += resultHTML;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</head>
+<body>
+    <h1>Search Google</h1>
+    <input type="text" id="search" placeholder="Enter your search query">
+    <button onclick="searchGoogle()">Search</button>
+    <div id="results"></div>
+</body>
+</html>
